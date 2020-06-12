@@ -1011,7 +1011,7 @@ var CharacterController = function (_EventDispatcher) {
 						_this.center = _this.object.position.clone();
 						_this.radius = radius;
 						_this.groundPadding = .5;
-						_this.maxSlopeGradient = Math.cos(50 * THREE.Math.DEG2RAD);
+						_this.maxSlopeGradient = Math.cos(50 * THREE$1.Math.DEG2RAD);
 						_this.isGrounded = false;
 						_this.isOnSlope = false;
 						_this.isIdling = false;
@@ -1019,11 +1019,11 @@ var CharacterController = function (_EventDispatcher) {
 						_this.isJumping = false;
 						_this.direction = 0; // 0 to 2PI(=360deg) in rad
 						_this.movementSpeed = 10; // Meters Per Second
-						_this.velocity = new THREE.Vector3(0, -10, 0);
+						_this.velocity = new THREE$1.Vector3(0, -10, 0);
 						_this.currentJumpPower = 0;
 						_this.jumpStartTime = 0;
 						_this.groundHeight = 0;
-						_this.groundNormal = new THREE.Vector3();
+						_this.groundNormal = new THREE$1.Vector3();
 						_this.collisionCandidate;
 						_this.contactInfo = [];
 
@@ -1137,7 +1137,7 @@ var CharacterController = function (_EventDispatcher) {
 
 									// 壁に向かった場合、壁方向の速度を0にする処理
 									// vs walls and sliding on the wall
-									var direction2D = new THREE.Vector2(rightDierction, frontDierction);
+									var direction2D = new THREE$1.Vector2(rightDierction, frontDierction);
 									// const frontAngle = Math.atan2( direction2D.y, direction2D.x );
 									var negativeFrontAngle = Math.atan2(-direction2D.y, -direction2D.x);
 
@@ -1158,7 +1158,7 @@ var CharacterController = function (_EventDispatcher) {
 															isHittingCeiling = true;
 												}
 
-												var wallNomal2D = new THREE.Vector2(normal.x, normal.z).normalize();
+												var wallNomal2D = new THREE$1.Vector2(normal.x, normal.z).normalize();
 												var wallAngle = Math.atan2(wallNomal2D.y, wallNomal2D.x);
 
 												if (Math.abs(negativeFrontAngle - wallAngle) >= Math.PI * 0.5 && //  90deg
@@ -1209,9 +1209,9 @@ var CharacterController = function (_EventDispatcher) {
 									var groundContactInfoTmp = void 0;
 									var faces = this.collisionCandidate;
 
-									var head = new THREE.Vector3(this.center.x, this.center.y + this.radius, this.center.z);
+									var head = new THREE$1.Vector3(this.center.x, this.center.y + this.radius, this.center.z);
 
-									var to = new THREE.Vector3(this.center.x, this.center.y - 1e10, this.center.z);
+									var to = new THREE$1.Vector3(this.center.x, this.center.y - 1e10, this.center.z);
 
 									for (var i = 0, l = faces.length; i < l; i++) {
 
@@ -1302,11 +1302,11 @@ var CharacterController = function (_EventDispatcher) {
 									var face = void 0;
 									var normal = void 0;
 									// let distance;
-									var point1 = new THREE.Vector3();
-									var point2 = new THREE.Vector3();
-									var direction = new THREE.Vector3();
-									var translateScoped = new THREE.Vector3();
-									var translate = new THREE.Vector3();
+									var point1 = new THREE$1.Vector3();
+									var point2 = new THREE$1.Vector3();
+									var direction = new THREE$1.Vector3();
+									var translateScoped = new THREE$1.Vector3();
+									var translate = new THREE$1.Vector3();
 
 									if (this.contactInfo.length === 0) {
 

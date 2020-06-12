@@ -3,6 +3,7 @@ import {
 	testSegmentTriangle,
 	isIntersectionSphereTriangle,
 } from '../math/collision.js';
+import { THREE } from '../install.js';
 
 export class CharacterController extends EventDispatcher {
 
