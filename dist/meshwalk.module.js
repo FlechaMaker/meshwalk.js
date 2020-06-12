@@ -1620,10 +1620,6 @@ function _inherits$2(subClass, superClass) { if (typeof superClass !== "function
 var PI2 = Math.PI * 2;
 var PI_HALF = Math.PI / 2;
 
-var rotationMatrix = new THREE$1.Matrix4();
-var rotationX = new THREE$1.Matrix4();
-var rotationY = new THREE$1.Matrix4();
-
 // camera              isntance of THREE.Camera
 // trackObject         isntance of THREE.Object3D
 // params.el           DOM element
@@ -1669,6 +1665,10 @@ var TPSCameraControl = function (_EventDispatcher) {
 		_this.el.addEventListener('mouseup', _this._mouseupListener);
 		_this.el.addEventListener('mousewheel', _this._scrollListener);
 		_this.el.addEventListener('DOMMouseScroll', _this._scrollListener);
+
+		_this.rotationMatrix = new THREE$1.Matrix4();
+		_this.rotationX = new THREE$1.Matrix4();
+		_this.rotationY = new THREE$1.Matrix4();
 
 		return _this;
 	}
@@ -1732,14 +1732,14 @@ var TPSCameraControl = function (_EventDispatcher) {
 
 			var distance = this.radius;
 
-			rotationX.makeRotationX(this.phi);
-			rotationY.makeRotationY(this.theta);
-			rotationMatrix.multiplyMatrices(rotationX, rotationY);
+			this.rotationX.makeRotationX(this.phi);
+			this.rotationY.makeRotationY(this.theta);
+			this.rotationMatrix.multiplyMatrices(this.rotationX, this.rotationY);
 
 			for (var i = 0; i < 4; i++) {
 
 				var nearPlainCorner = this.nearPlainCornersWithPadding[i].clone();
-				nearPlainCorner.applyMatrix4(rotationMatrix);
+				nearPlainCorner.applyMatrix4(this.rotationMatrix);
 
 				var origin = new THREE$1.Vector3(this._center.x + nearPlainCorner.x, this._center.y + nearPlainCorner.y, this._center.z + nearPlainCorner.z);
 				var raycaster = new THREE$1.Raycaster(origin, // origin

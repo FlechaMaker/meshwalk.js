@@ -4,10 +4,6 @@ import { THREE } from '../install.js';
 const PI2     = Math.PI * 2;
 const PI_HALF = Math.PI / 2;
 
-const rotationMatrix = new THREE.Matrix4();
-const rotationX      = new THREE.Matrix4();
-const rotationY      = new THREE.Matrix4();
-
 // camera              isntance of THREE.Camera
 // trackObject         isntance of THREE.Object3D
 // params.el           DOM element
@@ -50,6 +46,10 @@ export class TPSCameraControl extends EventDispatcher {
 		this.el.addEventListener( 'mouseup',   this._mouseupListener );
 		this.el.addEventListener( 'mousewheel',     this._scrollListener );
 		this.el.addEventListener( 'DOMMouseScroll', this._scrollListener );
+
+		this.rotationMatrix = new THREE.Matrix4();
+		this.rotationX      = new THREE.Matrix4();
+		this.rotationY      = new THREE.Matrix4();
 
 	}
 
@@ -134,14 +134,14 @@ export class TPSCameraControl extends EventDispatcher {
 
 		let distance = this.radius;
 
-		rotationX.makeRotationX( this.phi );
-		rotationY.makeRotationY( this.theta );
-		rotationMatrix.multiplyMatrices( rotationX, rotationY );
+		this.rotationX.makeRotationX( this.phi );
+		this.rotationY.makeRotationY( this.theta );
+		this.rotationMatrix.multiplyMatrices( this.rotationX, this.rotationY );
 
 		for ( let i = 0; i < 4; i ++ ) {
 
 			const nearPlainCorner = this.nearPlainCornersWithPadding[ i ].clone();
-			nearPlainCorner.applyMatrix4( rotationMatrix );
+			nearPlainCorner.applyMatrix4( this.rotationMatrix );
 
 			const origin = new THREE.Vector3(
 				this._center.x + nearPlainCorner.x,
