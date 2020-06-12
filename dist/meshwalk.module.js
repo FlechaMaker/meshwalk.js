@@ -1620,10 +1620,6 @@ function _inherits$2(subClass, superClass) { if (typeof superClass !== "function
 var PI2 = Math.PI * 2;
 var PI_HALF = Math.PI / 2;
 
-var rotationMatrix = new THREE.Matrix4();
-var rotationX = new THREE.Matrix4();
-var rotationY = new THREE.Matrix4();
-
 // camera              isntance of THREE.Camera
 // trackObject         isntance of THREE.Object3D
 // params.el           DOM element
@@ -1670,6 +1666,9 @@ var TPSCameraControl = function (_EventDispatcher) {
 		_this.el.addEventListener('mousewheel', _this._scrollListener);
 		_this.el.addEventListener('DOMMouseScroll', _this._scrollListener);
 
+		_this.rotationMatrix = new THREE.Matrix4();
+		_this.rotationX = new THREE.Matrix4();
+		_this.rotationY = new THREE.Matrix4();
 		return _this;
 	}
 
