@@ -1626,6 +1626,10 @@
 	var PI2 = Math.PI * 2;
 	var PI_HALF = Math.PI / 2;
 
+	var rotationMatrix = new THREE$1.Matrix4();
+	var rotationX = new THREE$1.Matrix4();
+	var rotationY = new THREE$1.Matrix4();
+
 	// camera              isntance of THREE.Camera
 	// trackObject         isntance of THREE.Object3D
 	// params.el           DOM element
@@ -1646,7 +1650,7 @@
 			_this.camera = camera;
 			_this.trackObject = trackObject;
 			_this.el = params.el || document.body;
-			_this.offset = params.offset || new THREE.Vector3(0, 0, 0), _this.radius = params.radius || 10;
+			_this.offset = params.offset || new THREE$1.Vector3(0, 0, 0), _this.radius = params.radius || 10;
 			_this.minRadius = params.minRadius || 1;
 			_this.maxRadius = params.maxRadius || 30;
 			_this.rigidObjects = params.rigidObjects || [];
@@ -1672,9 +1676,6 @@
 			_this.el.addEventListener('mousewheel', _this._scrollListener);
 			_this.el.addEventListener('DOMMouseScroll', _this._scrollListener);
 
-			_this.rotationMatrix = new THREE.Matrix4();
-			_this.rotationX = new THREE.Matrix4();
-			_this.rotationY = new THREE.Matrix4();
 			return _this;
 		}
 
@@ -1682,9 +1683,9 @@
 			key: 'update',
 			value: function update() {
 
-				this._center = new THREE.Vector3(this.trackObject.matrixWorld.elements[12] + this.offset.x, this.trackObject.matrixWorld.elements[13] + this.offset.y, this.trackObject.matrixWorld.elements[14] + this.offset.z);
+				this._center = new THREE$1.Vector3(this.trackObject.matrixWorld.elements[12] + this.offset.x, this.trackObject.matrixWorld.elements[13] + this.offset.y, this.trackObject.matrixWorld.elements[14] + this.offset.z);
 
-				var position = new THREE.Vector3(Math.cos(this.phi) * Math.cos(this.theta + PI_HALF), Math.sin(this.phi), Math.cos(this.phi) * Math.sin(this.theta + PI_HALF));
+				var position = new THREE$1.Vector3(Math.cos(this.phi) * Math.cos(this.theta + PI_HALF), Math.sin(this.phi), Math.cos(this.phi) * Math.sin(this.theta + PI_HALF));
 				var distance = this.collisionTest(position.clone().normalize());
 				position.multiplyScalar(distance);
 				position.add(this._center);
@@ -1716,10 +1717,10 @@
 
 				var near = this.camera.near;
 				var halfFov = this.camera.fov * 0.5;
-				var h = Math.tan(halfFov * THREE.Math.DEG2RAD) * near;
+				var h = Math.tan(halfFov * THREE$1.Math.DEG2RAD) * near;
 				var w = h * this.camera.aspect;
 
-				this.nearPlainCornersWithPadding = [new THREE.Vector3(-w - near, -h - near, 0), new THREE.Vector3(w + near, -h - near, 0), new THREE.Vector3(w + near, h + near, 0), new THREE.Vector3(-w - near, h + near, 0)];
+				this.nearPlainCornersWithPadding = [new THREE$1.Vector3(-w - near, -h - near, 0), new THREE$1.Vector3(w + near, -h - near, 0), new THREE$1.Vector3(w + near, h + near, 0), new THREE$1.Vector3(-w - near, h + near, 0)];
 			}
 		}, {
 			key: 'setLatLon',
@@ -1728,8 +1729,8 @@
 				this.lat = lat > 90 ? 90 : lat < -90 ? -90 : lat;
 				this.lon = lon < 0 ? 360 + lon % 360 : lon % 360;
 
-				this.phi = this.lat * THREE.Math.DEG2RAD;
-				this.theta = -this.lon * THREE.Math.DEG2RAD;
+				this.phi = this.lat * THREE$1.Math.DEG2RAD;
+				this.theta = -this.lon * THREE$1.Math.DEG2RAD;
 			}
 		}, {
 			key: 'collisionTest',
@@ -1746,8 +1747,8 @@
 					var nearPlainCorner = this.nearPlainCornersWithPadding[i].clone();
 					nearPlainCorner.applyMatrix4(rotationMatrix);
 
-					var origin = new THREE.Vector3(this._center.x + nearPlainCorner.x, this._center.y + nearPlainCorner.y, this._center.z + nearPlainCorner.z);
-					var raycaster = new THREE.Raycaster(origin, // origin
+					var origin = new THREE$1.Vector3(this._center.x + nearPlainCorner.x, this._center.y + nearPlainCorner.y, this._center.z + nearPlainCorner.z);
+					var raycaster = new THREE$1.Raycaster(origin, // origin
 					direction, // direction
 					this.camera.near, // near
 					this.radius // far

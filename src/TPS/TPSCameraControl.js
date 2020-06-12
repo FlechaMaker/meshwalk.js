@@ -1,8 +1,12 @@
 import EventDispatcher from '../core/EventDispatcher.js';
+import { THREE } from '../install.js';
 
 const PI2     = Math.PI * 2;
 const PI_HALF = Math.PI / 2;
 
+const rotationMatrix = new THREE.Matrix4();
+const rotationX      = new THREE.Matrix4();
+const rotationY      = new THREE.Matrix4();
 
 // camera              isntance of THREE.Camera
 // trackObject         isntance of THREE.Object3D
@@ -47,9 +51,6 @@ export class TPSCameraControl extends EventDispatcher {
 		this.el.addEventListener( 'mousewheel',     this._scrollListener );
 		this.el.addEventListener( 'DOMMouseScroll', this._scrollListener );
 
-		this.rotationMatrix = new THREE.Matrix4();
-		this.rotationX      = new THREE.Matrix4();
-		this.rotationY      = new THREE.Matrix4();
 	}
 
 	update() {
